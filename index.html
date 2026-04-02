@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -18,6 +19,8 @@
     --hint: #9B9B96;
     --free: #0F6E56;
     --free-bg: #E1F5EE;
+    --confirmar: #7A5C00;
+    --confirmar-bg: #FFF8E1;
   }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
   .wrap { max-width: 430px; margin: 0 auto; background: var(--surface); min-height: 100vh; border-left: 0.5px solid var(--border); border-right: 0.5px solid var(--border); }
@@ -42,10 +45,13 @@
   .cat-expo    { background: #FAEEDA; color: #633806; }
   .cat-rua     { background: #EAF3DE; color: #27500A; }
   .cat-standup { background: #E6F1FB; color: #0C447C; }
+  .cat-gastro  { background: #FEF0E8; color: #7A2E00; }
   .free-badge  { font-size: 10px; font-weight: 500; color: var(--free); background: var(--free-bg); padding: 3px 9px; border-radius: 99px; }
+  .confirmar-badge { font-size: 10px; font-weight: 500; color: var(--confirmar); background: var(--confirmar-bg); padding: 3px 9px; border-radius: 99px; }
   .time-label  { font-size: 12px; color: var(--hint); }
   .card-title  { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text); line-height: 1.3; margin-bottom: 5px; }
   .card-meta   { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .card-note   { font-size: 11px; color: var(--confirmar); margin-top: 6px; font-style: italic; }
   .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border-md); display: inline-block; flex-shrink: 0; }
   .divider { height: 0.5px; background: var(--border); margin: 1.25rem 0 0; }
   .week-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--hint); padding: 0.875rem 1.25rem 0; }
@@ -74,41 +80,48 @@
     <button class="pill" onclick="filter('musica',this)">Música</button>
     <button class="pill" onclick="filter('teatro',this)">Teatro</button>
     <button class="pill" onclick="filter('expo',this)">Exposições</button>
-    <button class="pill" onclick="filter('rua',this)">Rua</button>
+    <button class="pill" onclick="filter('gastro',this)">Gastro</button>
     <button class="pill" onclick="filter('gratuito',this)">Gratuito</button>
   </div>
 
   <div class="section">
-    <p class="section-label">Hoje · domingo, 29/03</p>
+    <p class="section-label">Esta semana · 03–06/04</p>
 
-    <a href="https://www.sympla.com.br/evento/lady-com-susana-vieira/2521521" target="_blank" rel="noopener" class="card" data-cat="musica" data-free="false">
-      <div class="card-top"><span class="cat cat-musica">Música</span><span class="time-label">18h</span></div>
-      <p class="card-title">Lady — Susana Vieira</p>
-      <div class="card-meta"><span>Sesc Palladium</span><span class="dot"></span><span>R$25–R$140</span><span class="dot"></span><span>Centro</span></div>
+    <!-- SHOWS & MÚSICA -->
+
+    <a href="https://filarmonica.byinti.com/#/event/2026-concerto-especial-musica-de-cinema" target="_blank" rel="noopener" class="card" data-cat="musica" data-free="false">
+      <div class="card-top"><span class="cat cat-musica">Música</span><span class="time-label">Sex 03/04 · 20h30</span></div>
+      <p class="card-title">Filarmônica de MG — Especial Música de Cinema</p>
+      <div class="card-meta"><span>Sala Minas Gerais</span><span class="dot"></span><span>A partir de R$25</span><span class="dot"></span><span>Barro Preto</span></div>
     </a>
 
-    <a href="https://www.sympla.com.br/eventos/belo-horizonte-mg/teatro-espetaculo" target="_blank" rel="noopener" class="card" data-cat="teatro" data-free="false">
-      <div class="card-top"><span class="cat cat-teatro">Teatro</span><span class="time-label">19h</span></div>
-      <p class="card-title">Delírio e Queda — Rita Clemente</p>
-      <div class="card-meta"><span>Sesc Palladium</span><span class="dot"></span><span>A partir de R$10</span><span class="dot"></span><span>Centro</span></div>
+    <a href="https://bileto.sympla.com.br/event/118083/d/373475/s/2496176" target="_blank" rel="noopener" class="card" data-cat="musica" data-free="false">
+      <div class="card-top"><span class="cat cat-musica">Música</span><span class="time-label">Dom 05/04 · 17h</span></div>
+      <p class="card-title">Tom Nascimento — Reticências… 25 anos</p>
+      <div class="card-meta"><span>Sesc Palladium</span><span class="dot"></span><span>A partir de R$15</span><span class="dot"></span><span>Centro</span></div>
     </a>
 
-    <a href="https://www.sympla.com.br/eventos/belo-horizonte-mg" target="_blank" rel="noopener" class="card" data-cat="rua" data-free="true">
-      <div class="card-top"><span class="cat cat-rua">Festival</span><span class="free-badge">Gratuito</span></div>
-      <p class="card-title">Circuito Cultural Barreiro — 14 Bis e outros</p>
-      <div class="card-meta"><span>Quinta Arte</span><span class="dot"></span><span>10h–21h</span><span class="dot"></span><span>Barreiro</span></div>
+    <!-- TEATRO & ESPETÁCULOS -->
+
+    <a href="https://ingressosccbb.com.br/" target="_blank" rel="noopener" class="card" data-cat="teatro" data-free="false">
+      <div class="card-top"><span class="cat cat-teatro">Teatro</span><span class="time-label">Sex–Dom · 03–05/04</span></div>
+      <p class="card-title">GIBI — dança e palhaçaria</p>
+      <div class="card-meta"><span>CCBB BH</span><span class="dot"></span><span>A partir de R$15</span><span class="dot"></span><span>Funcionários</span></div>
     </a>
 
-    <a href="https://www.agendabh.com.br/espetaculo/" target="_blank" rel="noopener" class="card" data-cat="teatro" data-free="true">
-      <div class="card-top"><span class="cat cat-teatro">Teatro</span><span class="free-badge">Gratuito</span></div>
-      <p class="card-title">A Mancha Invisível</p>
-      <div class="card-meta"><span>Galpão Cine Horto</span><span class="dot"></span><span>19h</span><span class="dot"></span><span>Horto</span></div>
-    </a>
+    <div class="card" data-cat="teatro" data-free="false">
+      <div class="card-top"><span class="cat cat-standup">Stand Up</span><span class="confirmar-badge">A confirmar</span></div>
+      <p class="card-title">Raphael Ghanem — A Carne Só Cai no Prato do Vegano</p>
+      <div class="card-meta"><span>Cine Theatro Brasil</span><span class="dot"></span><span>Sex 03 e Sáb 04/04 · 19h</span><span class="dot"></span><span>+18</span></div>
+      <p class="card-note">⚠ Ingresso a confirmar — verifique no Eventim antes de ir</p>
+    </div>
 
-    <a href="https://palaciodasartes.com.br" target="_blank" rel="noopener" class="card" data-cat="teatro" data-free="true">
-      <div class="card-top"><span class="cat cat-teatro">Teatro</span><span class="free-badge">Gratuito</span></div>
-      <p class="card-title">Afroapocalíptico — Grupo dos Dez</p>
-      <div class="card-meta"><span>Palácio das Artes</span><span class="dot"></span><span>19h</span><span class="dot"></span><span>Centro</span></div>
+    <!-- EXPOSIÇÕES -->
+
+    <a href="https://ccbb.com.br/belo-horizonte/programacao/" target="_blank" rel="noopener" class="card" data-cat="expo" data-free="true">
+      <div class="card-top"><span class="cat cat-expo">Exposição</span><span class="free-badge">Gratuito</span></div>
+      <p class="card-title">Marlene Barros — Tecitura do Feminino</p>
+      <div class="card-meta"><span>CCBB BH</span><span class="dot"></span><span>Qua–Seg 10h</span><span class="dot"></span><span>até 01/06</span></div>
     </a>
 
     <a href="https://ccbb.com.br/belo-horizonte/programacao/" target="_blank" rel="noopener" class="card" data-cat="expo" data-free="true">
@@ -117,29 +130,23 @@
       <div class="card-meta"><span>CCBB BH</span><span class="dot"></span><span>10h–22h</span><span class="dot"></span><span>até 22/06</span></div>
     </a>
 
-    <div class="card" data-cat="rua" data-free="true">
-      <div class="card-top"><span class="cat cat-rua">Rua</span><span class="free-badge">Gratuito</span></div>
-      <p class="card-title">Encontro de Carrinhos de Rolimã</p>
-      <div class="card-meta"><span>Bairro Califórnia</span><span class="dot"></span><span>9h–13h</span><span class="dot"></span><span>próx. Arena MRV</span></div>
-    </div>
+    <a href="https://galeriamurilocastro.com.br" target="_blank" rel="noopener" class="card" data-cat="expo" data-free="true">
+      <div class="card-top"><span class="cat cat-expo">Exposição</span><span class="free-badge">Gratuito</span></div>
+      <p class="card-title">Pintura Abismal — René Machado</p>
+      <div class="card-meta"><span>Galeria Murilo Castro</span><span class="dot"></span><span>Seg–Sáb 11h–17h</span><span class="dot"></span><span>até 25/04</span></div>
+    </a>
 
     <div class="divider"></div>
   </div>
 
-  <p class="week-label" id="week-label">Próximos dias</p>
+  <p class="week-label" id="week-label">Chegando na próxima semana</p>
 
   <div class="section" style="padding-top:10px">
 
-    <a href="https://www.sympla.com.br/eventos/belo-horizonte-mg" target="_blank" rel="noopener" class="card" data-cat="musica" data-free="false">
-      <div class="card-top"><span class="cat cat-musica">Música</span><span class="time-label">Ter 31/03 · 20h30</span></div>
-      <p class="card-title">KLUB — O Clube da Esquina por Telo Borges</p>
-      <div class="card-meta"><span>Palácio das Artes</span><span class="dot"></span><span>A partir de R$80</span><span class="dot"></span><span>Centro</span></div>
-    </a>
-
-    <a href="https://www.eventim.com.br/event/raphael-ghanem-em-a-carne-so-cai-no-prato-do-vegano-cine-theatro-brasil-21016942/" target="_blank" rel="noopener" class="card" data-cat="standup" data-free="false">
-      <div class="card-top"><span class="cat cat-standup">Stand Up</span><span class="time-label">Sex 03/04 · 19h</span></div>
-      <p class="card-title">Raphael Ghanem — A Carne Só Cai no Prato do Vegano</p>
-      <div class="card-meta"><span>Cine Theatro Brasil</span><span class="dot"></span><span>+18</span><span class="dot"></span><span>Centro</span></div>
+    <a href="https://comidadibuteco.com.br" target="_blank" rel="noopener" class="card" data-cat="gastro" data-free="false">
+      <div class="card-top"><span class="cat cat-gastro">Gastro</span><span class="time-label">A partir de 10/04</span></div>
+      <p class="card-title">Comida di Buteco 2026 — "Somos todos verduras"</p>
+      <div class="card-meta"><span>128 bares em BH</span><span class="dot"></span><span>R$40/petisco</span><span class="dot"></span><span>10/04 a 10/05</span></div>
     </a>
 
   </div>
@@ -150,9 +157,9 @@
 
   <div class="cta">
     <div class="cta-box">
-      <p class="cta-title">Receba toda quinta</p>
+      <p class="cta-title">Receba toda quinta-feira</p>
       <p class="cta-sub">A curadoria da semana, toda quinta, antes do fim de semana chegar. Grátis, só pra BH por enquanto.</p>
-      <a class="cta-btn" href="https://forms.gle/rburpxNEvDE5EmqB8"_blank" rel="noopener">
+      <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSe8wkcNnekmozReDz8UamSQA48WrkBcrwl3MSw5DAdg2Dwmtw/viewform" target="_blank" rel="noopener">
         Quero receber toda quinta →
       </a>
     </div>
@@ -160,7 +167,7 @@
 
   <div class="footer">
     <span class="footer-brand">hoje.city</span>
-    <span class="footer-date">BH · 29 mar 2026</span>
+    <span class="footer-date">BH · 03 abr 2026</span>
   </div>
 
 </div>
