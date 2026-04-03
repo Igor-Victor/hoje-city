@@ -4,172 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Hoje.city — BH</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #FAFAF8;
-    --surface: #FFFFFF;
-    --border: rgba(0,0,0,0.08);
-    --border-md: rgba(0,0,0,0.14);
-    --text: #1A1A18;
-    --muted: #6B6B66;
-    --hint: #9B9B96;
-    --free: #0F6E56;
-    --free-bg: #E1F5EE;
-    --confirmar: #7A5C00;
-    --confirmar-bg: #FFF8E1;
-  }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 430px; margin: 0 auto; background: var(--surface); min-height: 100vh; border-left: 0.5px solid var(--border); border-right: 0.5px solid var(--border); }
-  .header { padding: 2rem 1.25rem 1.25rem; border-bottom: 0.5px solid var(--border); }
-  .logo { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--text); letter-spacing: -0.5px; margin-bottom: 3px; }
-  .logo em { font-style: italic; }
-  .tagline { font-size: 11px; color: var(--hint); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 300; }
-  .filters { display: flex; gap: 7px; padding: 0.875rem 1.25rem; overflow-x: auto; border-bottom: 0.5px solid var(--border); scrollbar-width: none; }
-  .filters::-webkit-scrollbar { display: none; }
-  .pill { white-space: nowrap; font-size: 12px; font-family: 'DM Sans', sans-serif; padding: 5px 13px; border-radius: 99px; border: 0.5px solid var(--border-md); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.15s ease; }
-  .pill.active { background: var(--text); color: #fff; border-color: var(--text); }
-  .pill:hover:not(.active) { border-color: var(--text); color: var(--text); }
-  .section { padding: 1.25rem 1.25rem 0; }
-  .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--hint); margin-bottom: 12px; }
-  .card { border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 9px; cursor: pointer; transition: border-color 0.15s, transform 0.1s; background: var(--surface); display: block; text-decoration: none; color: inherit; }
-  .card:hover { border-color: var(--border-md); transform: translateY(-1px); }
-  .card:active { transform: translateY(0); }
-  .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
-  .cat { font-size: 10px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 99px; }
-  .cat-musica  { background: #E1F5EE; color: #085041; }
-  .cat-teatro  { background: #EEEDFE; color: #3C3489; }
-  .cat-expo    { background: #FAEEDA; color: #633806; }
-  .cat-rua     { background: #EAF3DE; color: #27500A; }
-  .cat-standup { background: #E6F1FB; color: #0C447C; }
-  .cat-gastro  { background: #FEF0E8; color: #7A2E00; }
-  .free-badge  { font-size: 10px; font-weight: 500; color: var(--free); background: var(--free-bg); padding: 3px 9px; border-radius: 99px; }
-  .confirmar-badge { font-size: 10px; font-weight: 500; color: var(--confirmar); background: var(--confirmar-bg); padding: 3px 9px; border-radius: 99px; }
-  .time-label  { font-size: 12px; color: var(--hint); }
-  .card-title  { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text); line-height: 1.3; margin-bottom: 5px; }
-  .card-meta   { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-  .card-note   { font-size: 11px; color: var(--confirmar); margin-top: 6px; font-style: italic; }
-  .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border-md); display: inline-block; flex-shrink: 0; }
-  .divider { height: 0.5px; background: var(--border); margin: 1.25rem 0 0; }
-  .week-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--hint); padding: 0.875rem 1.25rem 0; }
-  .cta { padding: 1.5rem 1.25rem 2rem; }
-  .cta-box { background: #F4F4F1; border-radius: 14px; padding: 1.25rem; }
-  .cta-title { font-family: 'DM Serif Display', serif; font-size: 19px; color: var(--text); margin-bottom: 6px; line-height: 1.25; }
-  .cta-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
-  .cta-btn { display: block; width: 100%; padding: 13px; background: var(--text); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; transition: opacity 0.15s; }
-  .cta-btn:hover { opacity: 0.85; }
-  .footer { padding: 1rem 1.25rem 1.5rem; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .footer-brand { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 14px; color: var(--hint); }
-  .footer-date { font-size: 11px; color: var(--hint); }
-  .empty { text-align: center; padding: 2rem 1.25rem; color: var(--hint); font-size: 13px; display: none; }
-</style>
-</head>
-<body>
-<div class="wrap">
-
-  <div class="header">
-    <p class="logo">Hoje<em>.city</em> <span style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:#9B9B96;letter-spacing:0.02em">— BH</span></p>
-    <p class="tagline">O que rola em BH · curado toda quinta</p>
-  </div>
-
-  <div class="filters">
-    <button class="pill active" onclick="filter('todos',this)">Todos</button>
-    <button class="pill" onclick="filter('musica',this)">Música</button>
-    <button class="pill" onclick="filter('teatro',this)">Teatro</button>
-    <button class="pill" onclick="filter('expo',this)">Exposições</button>
-    <button class="pill" onclick="filter('gastro',this)">Gastro</button>
-    <button class="pill" onclick="filter('gratuito',this)">Gratuito</button>
-  </div>
-
-  <div class="section">
-    <p class="section-label">Esta semana · 03–06/04</p>
-
-    <!-- SHOWS & MÚSICA -->
-
-    <a href="https://filarmonica.byinti.com/#/event/2026-concerto-especial-musica-de-cinema" target="_blank" rel="noopener" class="card" data-cat="musica" data-free="false">
-      <div class="card-top"><span class="cat cat-musica">Música</span><span class="time-label">Sex 03/04 · 20h30</span></div>
-      <p class="card-title">Filarmônica de MG — Especial Música de Cinema</p>
-      <div class="card-meta"><span>Sala Minas Gerais</span><span class="dot"></span><span>A partir de R$25</span><span class="dot"></span><span>Barro Preto</span></div>
-    </a>
-
-    <a href="https://bileto.sympla.com.br/event/118083/d/373475/s/2496176" target="_blank" rel="noopener" class="card" data-cat="musica" data-free="false">
-      <div class="card-top"><span class="cat cat-musica">Música</span><span class="time-label">Dom 05/04 · 17h</span></div>
-      <p class="card-title">Tom Nascimento — Reticências… 25 anos</p>
-      <div class="card-meta"><span>Sesc Palladium</span><span class="dot"></span><span>A partir de R$15</span><span class="dot"></span><span>Centro</span></div>
-    </a>
-
-    <!-- TEATRO & ESPETÁCULOS -->
-
-    <a href="https://ingressosccbb.com.br/" target="_blank" rel="noopener" class="card" data-cat="teatro" data-free="false">
-      <div class="card-top"><span class="cat cat-teatro">Teatro</span><span class="time-label">Sex–Dom · 03–05/04</span></div>
-      <p class="card-title">GIBI — dança e palhaçaria</p>
-      <div class="card-meta"><span>CCBB BH</span><span class="dot"></span><span>A partir de R$15</span><span class="dot"></span><span>Funcionários</span></div>
-    </a>
-
-    <div class="card" data-cat="teatro" data-free="false">
-      <div class="card-top"><span class="cat cat-standup">Stand Up</span><span class="confirmar-badge">A confirmar</span></div>
-      <p class="card-title">Raphael Ghanem — A Carne Só Cai no Prato do Vegano</p>
-      <div class="card-meta"><span>Cine Theatro Brasil</span><span class="dot"></span><span>Sex 03 e Sáb 04/04 · 19h</span><span class="dot"></span><span>+18</span></div>
-      <p class="card-note">⚠ Ingresso a confirmar — verifique no Eventim antes de ir</p>
-    </div>
-
-    <!-- EXPOSIÇÕES -->
-
-    <a href="https://ccbb.com.br/belo-horizonte/programacao/" target="_blank" rel="noopener" class="card" data-cat="expo" data-free="true">
-      <div class="card-top"><span class="cat cat-expo">Exposição</span><span class="free-badge">Gratuito</span></div>
-      <p class="card-title">Marlene Barros — Tecitura do Feminino</p>
-      <div class="card-meta"><span>CCBB BH</span><span class="dot"></span><span>Qua–Seg 10h</span><span class="dot"></span><span>até 01/06</span></div>
-    </a>
-
-    <a href="https://ccbb.com.br/belo-horizonte/programacao/" target="_blank" rel="noopener" class="card" data-cat="expo" data-free="true">
-      <div class="card-top"><span class="cat cat-expo">Exposição</span><span class="free-badge">Gratuito</span></div>
-      <p class="card-title">MEME: no Br@sil da Memeficação</p>
-      <div class="card-meta"><span>CCBB BH</span><span class="dot"></span><span>10h–22h</span><span class="dot"></span><span>até 22/06</span></div>
-    </a>
-
-    <a href="https://galeriamurilocastro.com.br" target="_blank" rel="noopener" class="card" data-cat="expo" data-free="true">
-      <div class="card-top"><span class="cat cat-expo">Exposição</span><span class="free-badge">Gratuito</span></div>
-      <p class="card-title">Pintura Abismal — René Machado</p>
-      <div class="card-meta"><span>Galeria Murilo Castro</span><span class="dot"></span><span>Seg–Sáb 11h–17h</span><span class="dot"></span><span>até 25/04</span></div>
-    </a>
-
-    <div class="divider"></div>
-  </div>
-
-  <p class="week-label" id="week-label">Chegando na próxima semana</p>
-
-  <div class="section" style="padding-top:10px">
-
-    <a href="https://comidadibuteco.com.br" target="_blank" rel="noopener" class="card" data-cat="gastro" data-free="false">
-      <div class="card-top"><span class="cat cat-gastro">Gastro</span><span class="time-label">A partir de 10/04</span></div>
-      <p class="card-title">Comida di Buteco 2026 — "Somos todos verduras"</p>
-      <div class="card-meta"><span>128 bares em BH</span><span class="dot"></span><span>R$40/petisco</span><span class="dot"></span><span>10/04 a 10/05</span></div>
-    </a>
-
-  </div>
-
-  <p class="empty" id="empty-state">Nenhum evento nessa categoria. Tente outra ou veja todos.</p>
-
-  <div class="divider" style="margin-top:1.25rem"></div>
-
-  <div class="cta">
-    <div class="cta-box">
-      <p class="cta-title">Receba toda quinta-feira</p>
-      <p class="cta-sub">A curadoria da semana, toda quinta, antes do fim de semana chegar. Grátis, só pra BH por enquanto.</p>
-      <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSe8wkcNnekmozReDz8UamSQA48WrkBcrwl3MSw5DAdg2Dwmtw/viewform" target="_blank" rel="noopener">
-        Quero receber toda quinta →
-      </a>
-    </div>
-  </div>
-
-  <div class="footer"><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>hoje.city — BH</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
@@ -628,8 +462,8 @@
     <div class="cta-box">
       <p class="cta-title">Receba toda quinta</p>
       <p class="cta-sub">No seu WhatsApp, antes do fim de semana chegar. Grátis.</p>
-      <a class="cta-btn" href="SEU_LINK_DO_https://whatsapp.com/channel/0029Vb8RrP7EVccPzRUZXo0Z_AQUI" target="_blank" rel="noopener">
-        Entrar no https://whatsapp.com/channel/0029Vb8RrP7EVccPzRUZXo0Z →
+      <a class="cta-btn" href="https://whatsapp.com/channel/0029Vb8RrP7EVccPzRUZXo0Z" target="_blank" rel="noopener">
+        Entrar no canal →
       </a>
     </div>
   </div>
@@ -666,32 +500,6 @@
     document.getElementById('label-semana').style.display = isTodos ? '' : 'none';
     document.getElementById('label-chegando').style.display = isTodos ? '' : 'none';
     document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
-  }
-</script>
-</body>
-</html>
-
-    <span class="footer-brand">hoje.city</span>
-    <span class="footer-date">BH · 03 abr 2026</span>
-  </div>
-
-</div>
-<script>
-  function filter(cat, btn) {
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    const allCards = document.querySelectorAll('.card');
-    let visible = 0;
-    allCards.forEach(card => {
-      let show = false;
-      if (cat === 'todos') show = true;
-      else if (cat === 'gratuito') show = card.dataset.free === 'true';
-      else show = card.dataset.cat === cat;
-      card.style.display = show ? '' : 'none';
-      if (show) visible++;
-    });
-    document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
-    document.getElementById('week-label').style.display = cat === 'todos' ? '' : 'none';
   }
 </script>
 </body>
