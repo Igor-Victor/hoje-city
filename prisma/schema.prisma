@@ -1,0 +1,75 @@
+// Hoje.city — Prisma Schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id           String    @id @default(cuid())
+  title        String
+  description  String?
+  category     Category
+  startDate    DateTime
+  endDate      DateTime?
+  time         String
+  venue        String
+  address      String?
+  neighborhood String?
+  city         String    @default("belo-horizonte")
+  price        String
+  isFree       Boolean   @default(false)
+  ticketUrl    String?
+  sourceUrl    String?
+  isVerified   Boolean   @default(false)
+  isFeatured   Boolean   @default(false)
+  isPublished  Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  createdBy    String?
+}
+
+enum Category {
+  MUSICA
+  TEATRO
+  EXPO
+  RUA
+  STANDUP
+  FAMILIA
+  GASTRONOMIA
+  ESPORTE
+}
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  phone     String?
+  city      String   @default("belo-horizonte")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(CURATOR)
+  createdAt    DateTime @default(now())
+}
+
+enum Role {
+  SUPER_ADMIN
+  CURATOR
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  adminId   String
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+}

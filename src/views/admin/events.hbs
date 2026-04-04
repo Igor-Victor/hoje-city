@@ -1,0 +1,131 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <h1 class="admin-page__title">Eventos</h1>
+    <a href="/admin/events/new" class="btn btn--primary">+ Novo evento</a>
+  </div>
+
+  <!-- Filters / search -->
+  <form class="admin-filters" method="GET" action="/admin/events">
+    <input
+      class="form-input admin-filters__search"
+      type="search"
+      name="search"
+      placeholder="Buscar por título…"
+      value="{{search}}"
+    />
+    <select class="form-input admin-filters__select" name="category">
+      <option value="">Todas as categorias</option>
+      {{#each categories}}
+      <option value="{{value}}" {{#if (eq ../category value)}}selected{{/if}}>{{label}}</option>
+      {{/each}}
+    </select>
+    <input
+      class="form-input admin-filters__date"
+      type="date"
+      name="date"
+      value="{{date}}"
+    />
+    <button class="btn btn--outline" type="submit">Filtrar</button>
+    {{#if search}}<a href="/admin/events" class="btn btn--ghost">Limpar</a>{{/if}}
+  </form>
+
+  <!-- Table -->
+  {{#if events.length}}
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Categoria</th>
+          <th>Data</th>
+          <th>Local</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each events}}
+        <tr>
+          <td class="admin-table__title">{{title}}</td>
+          <td><span class="pill cat-{{categorySlug}}">{{categoryLabel}}</span></td>
+          <td class="admin-table__date">{{startDateFormatted}}</td>
+          <td class="admin-table__venue">{{venue}}</td>
+          <td>
+            <span class="status-badge status-badge--{{statusClass}}">{{statusLabel}}</span>
+          </td>
+          <td class="admin-table__actions">
+            <a href="/admin/events/{{id}}/edit" class="action-link">Editar</a>
+            <button
+              class="action-link action-link--toggle"
+              data-event-id="{{id}}"
+              data-published="{{isPublished}}"
+              onclick="togglePublish('{{id}}', {{isPublished}})"
+            >{{#if isPublished}}Despublicar{{else}}Publicar{{/if}}</button>
+            <button
+              class="action-link action-link--danger"
+              onclick="confirmDelete('{{id}}', '{{title}}')"
+            >Excluir</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  {{#if (gt totalPages 1)}}
+  <div class="pagination">
+    {{#if (gt page 1)}}
+    <a href="?page={{subtract page 1}}&search={{search}}&category={{category}}&date={{date}}" class="pagination__btn">← Anterior</a>
+    {{/if}}
+    <span class="pagination__info">Página {{page}} de {{totalPages}} · {{total}} eventos</span>
+    {{#if (lt page totalPages)}}
+    <a href="?page={{add page 1}}&search={{search}}&category={{category}}&date={{date}}" class="pagination__btn">Próxima →</a>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{else}}
+  <div class="empty-state">
+    <p class="empty-state__text">Nenhum evento encontrado.</p>
+    <a href="/admin/events/new" class="btn-outline">Criar primeiro evento</a>
+  </div>
+  {{/if}}
+</div>
+
+<!-- Delete confirm modal -->
+<div class="modal" id="deleteModal" hidden>
+  <div class="modal__backdrop" onclick="closeModal()"></div>
+  <div class="modal__box">
+    <p class="modal__title">Excluir evento?</p>
+    <p class="modal__body" id="deleteModalBody"></p>
+    <div class="modal__actions">
+      <button class="btn btn--outline" onclick="closeModal()">Cancelar</button>
+      <form id="deleteForm" method="POST">
+        <button type="submit" class="btn btn--danger">Excluir</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function confirmDelete(id, title) {
+  document.getElementById('deleteModalBody').textContent = '"' + title + '" será excluído permanentemente.';
+  document.getElementById('deleteForm').action = '/admin/events/' + id + '/delete';
+  document.getElementById('deleteModal').hidden = false;
+}
+function closeModal() {
+  document.getElementById('deleteModal').hidden = true;
+}
+async function togglePublish(id, isPublished) {
+  try {
+    const res = await fetch('/admin/events/' + id + '/toggle-publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (res.ok) window.location.reload();
+  } catch (e) {
+    alert('Erro ao atualizar status.');
+  }
+}
+</script>

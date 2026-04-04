@@ -1,0 +1,246 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <h1 class="admin-page__title">{{title}}</h1>
+    <a href="/admin/events" class="btn btn--outline">← Voltar</a>
+  </div>
+
+  {{#if errors}}
+  <div class="alert alert--error">
+    <strong>Corrija os erros abaixo:</strong>
+    <ul class="alert__list">
+      {{#each errors}}
+      {{#each this}}
+      <li>{{this}}</li>
+      {{/each}}
+      {{/each}}
+    </ul>
+  </div>
+  {{/if}}
+
+  <form
+    class="event-form"
+    method="POST"
+    action="{{#if isNew}}/admin/events{{else}}/admin/events/{{event.id}}{{/if}}"
+  >
+
+    <div class="form-grid">
+
+      <!-- Título -->
+      <div class="form-group form-group--full">
+        <label class="form-label" for="title">Título <span class="required">*</span></label>
+        <input
+          class="form-input"
+          type="text"
+          id="title"
+          name="title"
+          value="{{event.title}}"
+          required
+          minlength="3"
+          maxlength="120"
+          placeholder="ex: Lady — Susana Vieira"
+        />
+      </div>
+
+      <!-- Descrição -->
+      <div class="form-group form-group--full">
+        <label class="form-label" for="description">Descrição</label>
+        <textarea
+          class="form-input form-textarea"
+          id="description"
+          name="description"
+          rows="3"
+          maxlength="2000"
+          placeholder="Descrição curta do evento (opcional)"
+        >{{event.description}}</textarea>
+      </div>
+
+      <!-- Categoria -->
+      <div class="form-group">
+        <label class="form-label" for="category">Categoria <span class="required">*</span></label>
+        <select class="form-input" id="category" name="category" required>
+          <option value="">Selecione…</option>
+          {{#each categories}}
+          <option value="{{value}}" {{#if (eq ../event.category value)}}selected{{/if}}>{{label}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <!-- Horário -->
+      <div class="form-group">
+        <label class="form-label" for="time">Horário <span class="required">*</span></label>
+        <input
+          class="form-input"
+          type="text"
+          id="time"
+          name="time"
+          value="{{event.time}}"
+          required
+          maxlength="50"
+          placeholder="ex: 20h, 10h–21h, A confirmar"
+        />
+      </div>
+
+      <!-- Data início -->
+      <div class="form-group">
+        <label class="form-label" for="startDate">Data de início <span class="required">*</span></label>
+        <input
+          class="form-input"
+          type="date"
+          id="startDate"
+          name="startDate"
+          value="{{event.startDateInput}}"
+          required
+        />
+      </div>
+
+      <!-- Data fim -->
+      <div class="form-group">
+        <label class="form-label" for="endDate">Data de fim <span class="form-hint">(exposições em cartaz)</span></label>
+        <input
+          class="form-input"
+          type="date"
+          id="endDate"
+          name="endDate"
+          value="{{event.endDateInput}}"
+        />
+      </div>
+
+      <!-- Local -->
+      <div class="form-group">
+        <label class="form-label" for="venue">Local / Casa <span class="required">*</span></label>
+        <input
+          class="form-input"
+          type="text"
+          id="venue"
+          name="venue"
+          value="{{event.venue}}"
+          required
+          maxlength="120"
+          placeholder="ex: Sesc Palladium"
+        />
+      </div>
+
+      <!-- Bairro -->
+      <div class="form-group">
+        <label class="form-label" for="neighborhood">Bairro</label>
+        <input
+          class="form-input"
+          type="text"
+          id="neighborhood"
+          name="neighborhood"
+          value="{{event.neighborhood}}"
+          maxlength="100"
+          placeholder="ex: Centro"
+        />
+      </div>
+
+      <!-- Endereço -->
+      <div class="form-group form-group--full">
+        <label class="form-label" for="address">Endereço</label>
+        <input
+          class="form-input"
+          type="text"
+          id="address"
+          name="address"
+          value="{{event.address}}"
+          maxlength="200"
+          placeholder="ex: Rua Rio de Janeiro, 1046"
+        />
+      </div>
+
+      <!-- Preço -->
+      <div class="form-group">
+        <label class="form-label" for="price">Preço <span class="required">*</span></label>
+        <input
+          class="form-input"
+          type="text"
+          id="price"
+          name="price"
+          value="{{event.price}}"
+          required
+          maxlength="100"
+          placeholder="ex: Gratuito, R$25–R$140, A partir de R$10"
+        />
+      </div>
+
+      <!-- Cidade -->
+      <div class="form-group">
+        <label class="form-label" for="city">Cidade</label>
+        <input
+          class="form-input"
+          type="text"
+          id="city"
+          name="city"
+          value="{{#if event.city}}{{event.city}}{{else}}belo-horizonte{{/if}}"
+          maxlength="50"
+        />
+      </div>
+
+      <!-- URL ingresso -->
+      <div class="form-group">
+        <label class="form-label" for="ticketUrl">URL do ingresso</label>
+        <input
+          class="form-input"
+          type="url"
+          id="ticketUrl"
+          name="ticketUrl"
+          value="{{event.ticketUrl}}"
+          placeholder="ex: https://sympla.com.br/..."
+        />
+        <small class="form-hint">Apenas Sympla, Eventim, Ingresso, Eventbrite, Sesc</small>
+      </div>
+
+      <!-- URL fonte -->
+      <div class="form-group">
+        <label class="form-label" for="sourceUrl">URL da fonte</label>
+        <input
+          class="form-input"
+          type="url"
+          id="sourceUrl"
+          name="sourceUrl"
+          value="{{event.sourceUrl}}"
+          placeholder="ex: https://..."
+        />
+      </div>
+
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="form-checks">
+      <label class="check-label">
+        <input type="checkbox" name="isFree" id="isFree" value="true" {{checked event.isFree}} />
+        <span>Gratuito</span>
+      </label>
+      <label class="check-label">
+        <input type="checkbox" name="isVerified" id="isVerified" value="true" {{checked event.isVerified}} />
+        <span>Verificado</span>
+      </label>
+      <label class="check-label">
+        <input type="checkbox" name="isFeatured" id="isFeatured" value="true" {{checked event.isFeatured}} />
+        <span>Em destaque</span>
+      </label>
+      <label class="check-label">
+        <input type="checkbox" name="isPublished" id="isPublished" value="true" {{checked event.isPublished}} />
+        <span>Publicado</span>
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <a href="/admin/events" class="btn btn--outline">Cancelar</a>
+      <button type="submit" class="btn btn--primary">
+        {{#if isNew}}Criar evento{{else}}Salvar alterações{{/if}}
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<script>
+// Auto-check isFree when price contains "Gratuito"
+document.getElementById('price').addEventListener('input', function () {
+  const isFree = document.getElementById('isFree');
+  if (this.value.toLowerCase().includes('gratuito')) {
+    isFree.checked = true;
+  }
+});
+</script>

@@ -1,0 +1,57 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <div>
+      <h1 class="admin-page__title">Subscribers</h1>
+      <p class="admin-page__sub">{{total}} cadastros ativos</p>
+    </div>
+    <a href="/admin/subscribers/export.csv" class="btn btn--outline">↓ Exportar CSV</a>
+  </div>
+
+  {{#if subscribers.length}}
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>E-mail</th>
+          <th>Cidade</th>
+          <th>Cadastro</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each subscribers}}
+        <tr>
+          <td>{{emailMasked}}</td>
+          <td>{{city}}</td>
+          <td>{{createdAtFormatted}}</td>
+          <td>
+            {{#if isActive}}
+            <span class="status-badge status-badge--green">Ativo</span>
+            {{else}}
+            <span class="status-badge status-badge--gray">Inativo</span>
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  {{#if (gt totalPages 1)}}
+  <div class="pagination">
+    {{#if (gt page 1)}}
+    <a href="?page={{subtract page 1}}" class="pagination__btn">← Anterior</a>
+    {{/if}}
+    <span class="pagination__info">Página {{page}} de {{totalPages}}</span>
+    {{#if (lt page totalPages)}}
+    <a href="?page={{add page 1}}" class="pagination__btn">Próxima →</a>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{else}}
+  <div class="empty-state">
+    <p class="empty-state__text">Nenhum subscriber ainda.</p>
+  </div>
+  {{/if}}
+</div>

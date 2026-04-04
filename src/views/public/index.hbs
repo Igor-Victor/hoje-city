@@ -1,0 +1,136 @@
+<div class="vitrine">
+
+  <!-- Header -->
+  <header class="vitrine__header">
+    <div class="vitrine__logo">Hoje<em>.city</em></div>
+    <div class="vitrine__location">BH</div>
+    <p class="vitrine__tagline">O que rola em BH · curado toda sexta</p>
+  </header>
+
+  <!-- Category filters -->
+  <nav class="filters" aria-label="Filtrar por categoria">
+    <div class="filters__scroll">
+      {{#each categories}}
+      <a
+        href="{{#if (eq slug 'todos')}}/?{{else}}/?cat={{slug}}{{/if}}"
+        class="filter-pill{{#if isActive}} filter-pill--active{{/if}}"
+        aria-current="{{#if isActive}}true{{/if}}"
+      >{{label}}</a>
+      {{/each}}
+    </div>
+  </nav>
+
+  <!-- Today section -->
+  <section class="section">
+    <h2 class="section__heading">Hoje · {{todayLabel}}</h2>
+
+    {{#if todayEvents.length}}
+      <div class="event-list">
+        {{#each todayEvents}}
+          {{> event-card}}
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="empty-state">
+        <p class="empty-state__text">Nenhum evento nessa categoria hoje.</p>
+        <a href="/" class="btn-outline">Ver todos</a>
+      </div>
+    {{/if}}
+  </section>
+
+  <!-- Upcoming section — only show when no filter active -->
+  {{#if upcomingEvents.length}}
+  <section class="section">
+    <h2 class="section__heading">Próximos dias</h2>
+    <div class="event-list">
+      {{#each upcomingEvents}}
+        {{> event-card}}
+      {{/each}}
+    </div>
+  </section>
+  {{/if}}
+
+  <!-- Subscribe CTA -->
+  <section class="subscribe-cta" id="subscribe">
+    <p class="subscribe-cta__headline">Receba toda sexta-feira</p>
+    <p class="subscribe-cta__sub">A curadoria da semana direto no seu e-mail. Sem spam.</p>
+    <form class="subscribe-form" id="subscribeForm" action="/subscribe" method="POST">
+      <div class="subscribe-form__row">
+        <input
+          type="email"
+          name="email"
+          id="emailInput"
+          class="subscribe-form__input"
+          placeholder="seu@email.com"
+          required
+          autocomplete="email"
+        />
+        <button type="submit" class="subscribe-form__btn">Entrar</button>
+      </div>
+      <p class="subscribe-form__msg" id="subscribeMsg" hidden></p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="vitrine__footer">
+    <p>Hoje.city — BH · curadoria independente</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  const form = document.getElementById('subscribeForm');
+  const msg = document.getElementById('subscribeMsg');
+  const input = document.getElementById('emailInput');
+
+  if (!form) return;
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const email = input.value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      msg.textContent = 'E-mail inválido.';
+      msg.hidden = false;
+      msg.className = 'subscribe-form__msg subscribe-form__msg--error';
+      return;
+    }
+
+    const btn = form.querySelector('button');
+    btn.disabled = true;
+    btn.textContent = '…';
+
+    try {
+      const res = await fetch('/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+
+      form.querySelector('.subscribe-form__row').hidden = true;
+      msg.hidden = false;
+
+      if (data.duplicate) {
+        msg.textContent = 'Esse e-mail já está na lista.';
+        msg.className = 'subscribe-form__msg subscribe-form__msg--info';
+      } else if (data.success) {
+        msg.textContent = '✓ E-mail cadastrado! Te vemos sexta.';
+        msg.className = 'subscribe-form__msg subscribe-form__msg--success';
+      } else {
+        msg.textContent = data.error || 'Erro ao cadastrar. Tente novamente.';
+        msg.className = 'subscribe-form__msg subscribe-form__msg--error';
+        form.querySelector('.subscribe-form__row').hidden = false;
+        btn.disabled = false;
+        btn.textContent = 'Entrar';
+      }
+    } catch {
+      msg.textContent = 'Erro de conexão. Tente novamente.';
+      msg.className = 'subscribe-form__msg subscribe-form__msg--error';
+      msg.hidden = false;
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+    }
+  });
+})();
+</script>

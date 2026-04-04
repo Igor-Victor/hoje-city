@@ -1,0 +1,87 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-card__logo">Hoje<em>.city</em></div>
+    <p class="login-card__sub">Painel de administração</p>
+
+    {{#if error}}
+    <div class="alert alert--error">{{error}}</div>
+    {{/if}}
+
+    <form class="login-form" id="loginForm" method="POST" action="/admin/login">
+      <div class="form-group">
+        <label class="form-label" for="email">E-mail</label>
+        <input
+          class="form-input"
+          type="email"
+          id="email"
+          name="email"
+          required
+          autocomplete="email"
+          autofocus
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Senha</label>
+        <input
+          class="form-input"
+          type="password"
+          id="password"
+          name="password"
+          required
+          autocomplete="current-password"
+        />
+      </div>
+      <button type="submit" class="btn btn--primary btn--full" id="loginBtn">Entrar</button>
+      <p class="login-form__error" id="loginError" hidden></p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  const form = document.getElementById('loginForm');
+  const btn = document.getElementById('loginBtn');
+  const errEl = document.getElementById('loginError');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = '…';
+    errEl.hidden = true;
+
+    const body = {
+      email: document.getElementById('email').value.trim(),
+      password: document.getElementById('password').value,
+    };
+
+    try {
+      const res = await fetch('/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        redirect: 'follow',
+      });
+
+      if (res.redirected) {
+        window.location.href = res.url;
+        return;
+      }
+
+      const data = await res.json();
+      if (data.success) {
+        window.location.href = '/admin/events';
+      } else {
+        errEl.textContent = data.error || 'E-mail ou senha incorretos';
+        errEl.hidden = false;
+        btn.disabled = false;
+        btn.textContent = 'Entrar';
+      }
+    } catch {
+      errEl.textContent = 'Erro de conexão. Tente novamente.';
+      errEl.hidden = false;
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+    }
+  });
+})();
+</script>

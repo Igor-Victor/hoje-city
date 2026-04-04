@@ -1,0 +1,35 @@
+{{#if hasLink}}
+<a class="event-card event-card--link" href="{{link}}" target="_blank" rel="noopener noreferrer">
+{{else}}
+<div class="event-card">
+{{/if}}
+
+  <div class="event-card__top">
+    <span class="pill cat-{{categorySlug}}">{{categoryLabel}}</span>
+    <span class="event-card__time">
+      {{#if isFree}}
+        <span class="pill free-badge">Gratuito</span>
+      {{else}}
+        {{time}}
+      {{/if}}
+    </span>
+  </div>
+
+  <h3 class="event-card__title">{{title}}</h3>
+
+  <div class="event-card__meta">
+    <span class="event-card__venue">{{venue}}</span>
+    {{#if neighborhood}}<span class="event-card__sep">·</span><span class="event-card__neighborhood">{{neighborhood}}</span>{{/if}}
+    {{#if (not isFree)}}<span class="event-card__sep">·</span><span class="event-card__price">{{price}}</span>{{/if}}
+    {{#if endDateLabel}}<span class="event-card__sep">·</span><span class="event-card__enddate">{{endDateLabel}}</span>{{/if}}
+  </div>
+
+  {{#if isFeatured}}
+  <div class="event-card__featured-bar"></div>
+  {{/if}}
+
+{{#if hasLink}}
+</a>
+{{else}}
+</div>
+{{/if}}

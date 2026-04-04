@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Hoje.city</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="admin-body">
+  <nav class="admin-nav">
+    <a href="/admin/events" class="admin-nav__logo">Hoje<em>.city</em></a>
+    <div class="admin-nav__links">
+      <a href="/admin/events" class="admin-nav__link">Eventos</a>
+      <a href="/admin/subscribers" class="admin-nav__link">Subscribers</a>
+      <a href="/" target="_blank" class="admin-nav__link admin-nav__link--muted">↗ Ver site</a>
+    </div>
+    <form action="/admin/logout" method="POST" class="admin-nav__logout">
+      <button type="submit" class="admin-nav__link admin-nav__link--logout">Sair</button>
+    </form>
+  </nav>
+  <main class="admin-main">
+    {{{body}}}
+  </main>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
